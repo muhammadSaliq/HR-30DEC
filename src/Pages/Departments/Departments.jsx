@@ -46,6 +46,7 @@ const Department = () => {
     const [hoverStatesView, setHoverStatesView] = useState({});
     const [hoverStatesActive, setHoverStatesActive] = useState({});
     const [hoverStatesInActive, setHoverStatesInActive] = useState({});
+    const [olddepartmentname, setolddepartmentname] = useState("");
 
 
 
@@ -227,9 +228,9 @@ const Department = () => {
   const handleEditDialogClose = () => {
     setOpenEditDialog(false);
 };
- const handleEdit = async (id) => {
+ const handleEdit = async (id , name) => {
         const UserData = { ...SingleDepartment};
-        const response = await axios.put(`http://localhost:8000/editdepartment/${id}`, UserData);
+        const response = await axios.put(`http://localhost:8000/editdepartment/${id}/${name}/${olddepartmentname}`, UserData);
         seteditbool(true)
         handleOpenAlert('Department successfully Editted!');
         setOpenEditDialog(false);
@@ -387,7 +388,7 @@ const Department = () => {
           <Button onClick={handleEditDialogClose} color='primary'>
             Cancel
           </Button>
-          <Button onClick={() => {handleEdit(SingleDepartment._id)}}
+          <Button onClick={() => {handleEdit(SingleDepartment._id, SingleDepartment.departmentname)}}
           // onClick={AddDepartment} 
           color='primary'>
             Save
@@ -465,7 +466,7 @@ const Department = () => {
                                     handleEditDialogOpen(); fetchSingleDepartment(value._id)
                                 }}
                                 className="relative inline-flex bg-black text-violet-500 items-center px-4 py-2 text-sm font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-violet-700 hover:text-black focus:ring-4 focus:outline-none focus:ring-gray-200"
-      onMouseEnter={() => handleMouseEnter(value._id)}
+      onMouseEnter={() => {handleMouseEnter(value._id); setolddepartmentname(value.departmentname)}}
                                 onMouseLeave={() => handleMouseLeave(value._id)}    
                                 >
                                 <FontAwesomeIcon icon={faPen} />
