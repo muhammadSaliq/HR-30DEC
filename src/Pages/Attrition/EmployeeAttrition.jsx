@@ -97,7 +97,7 @@ const Employeeattrition = () => {
 
 
     
-
+//single employee
     const fetchSingleCustomer = async(id) => {
         const response = await axios.get('http://localhost:8000/geteditemployee/${id}');
         console.log("response: ", response);
@@ -118,7 +118,7 @@ const Employeeattrition = () => {
     
 
     
-
+// all departments
   const getAlldepartments = async () => {
 
     try {
@@ -131,11 +131,11 @@ const Employeeattrition = () => {
     }
   };
 
-    
+    // integration with employee attrition api for prediction
   const attritionemloyee = async () => {
 
         try {
-          const response = await axios.post('http://127.0.0.1:5000/Addemployee', {
+          const response = await axios.post('http://127.0.0.1:5000/Addemployee', { //send data to api
             Age: age,
             BusinessTravel: businessTravel,
             DailyRate: dailyRate,
@@ -173,15 +173,17 @@ const Employeeattrition = () => {
 
               
           });
-   console.log("add res",response.data.result)
-   setresultattr(response.data.result)
-          // Handle the response according to your needs
-          if (response.status === 200) {
+   console.log("add res",response.data.result) // result is showwn
+   setresultattr(response.data.result) //result is save
+
+           if (response.status === 200) {
             console.log('Employee successfully registered');
             setSnackbarMessage('Employee successfully registered');
             setSnackbarSeverity('success');
             setOpenSnackbar(true);
-            if (response.data.result == "Yes") {
+
+            //navigation to negative or positive attrition page dependng on the result
+            if (response.data.result == "Yes") {   
               navigate('/NegativeAttrition')
              }
              if (response.data.result == "No") {
@@ -203,7 +205,7 @@ const Employeeattrition = () => {
         }
     
     
-    
+    // all employee data
       const getAllemployee = async () => {
         try {
           const response = await axios.get('http://localhost:8000/allemployees');
@@ -216,6 +218,7 @@ const Employeeattrition = () => {
       };
       
 
+      //get all emp and dep data on render
     useEffect(() => {
         console.log('asdasd')
         getAllemployee()
@@ -239,6 +242,7 @@ const Employeeattrition = () => {
                 <h2 className="heado">Employee Attrition</h2>
             </div>
             <div className='flex  justify-evenly flex-wrap my-4' >
+              {/* display all employee */}
             {allemployees.map((value) => (
                     <div style={containerStyle}>
         <div className="divss">
@@ -254,7 +258,7 @@ const Employeeattrition = () => {
 
         <div className="flex mt-4 space-x-3 md:mt-6 justify-center">
 
-       
+       {/* preicct attrition btton */}
 
 <button onTouchStart={()=> {setAge(value.Age); setBusinessTravel(value.BusinessTravel); setDailyRate(value.DailyRate); setDepartment(value.Department); setDistanceFromHome(value.DistanceFromHome); setEducation(value.Education); setEducationField(value.EducationField); setEmployeeCount(value.EmployeeCount); setEmployeeNumber(value.EmployeeNumber); setEnvironmentSatisfaction(value.EnvironmentSatisfaction); setGender(value.Gender); setHourlyRate(value.HourlyRate); setJobInvolvement(value.JobInvolvement); setJobLevel(value.JobLevel); setJobRole(value.JobRole); setJobSatisfaction(value.JobSatisfaction); setMaritalStatus(value.MaritalStatus); setMonthlyIncome(value.MonthlyIncome); setMonthlyRate(value.MonthlyRate); setNumCompaniesWorked(value.NumCompaniesWorked); setOver18(value.Over18); setOverTime(value.OverTime); setPercentSalaryHike(value.PercentSalaryHike); setPerformanceRating(value.PerformanceRating); setRelationshipSatisfaction(value.RelationshipSatisfaction); setStandardHours(value.StandardHours); setStockOptionLevel(value.StockOptionLevel); setTotalWorkingYears(value.TotalWorkingYears); setTrainingTimesLastYear(value.TrainingTimesLastYear); setWorkLifeBalance(value.WorkLifeBalance); setYearsAtCompany(value.YearsAtCompany); setYearsInCurrentRole(value.YearsInCurrentRole); setYearsSinceLastPromotion(value.YearsSinceLastPromotion); setYearsWithCurrManager(value.YearsWithCurrManager); }}
  

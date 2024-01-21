@@ -42,7 +42,7 @@ const EmployeeDetails = () => {
 
     
     
-    
+    // get employee details function
       const getAllemployee = async () => {
         try {
           const response = await axios.get(`http://localhost:8000/employeedetails/${id}`);
@@ -54,7 +54,7 @@ const EmployeeDetails = () => {
         }
       };
 
-
+// run the function on render
     useEffect(() => {
         console.log('asdasd')
         getAllemployee()
@@ -71,7 +71,7 @@ const EmployeeDetails = () => {
                 <h2 className="heado">{allemployees.emloyeename}</h2>
             </div>
 
-
+{/* displaying emloyee data */}
     <div className="relative overflow-x-auto">
     <table className="w-full text-sm text-left text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">

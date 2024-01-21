@@ -63,7 +63,7 @@ const Manageemployee = () => {
         setOpenSnackbar(false);
       };
     
-
+//single emp data
       const fetchSingleCustomer = async() => {
         const response = await axios.get(`http://localhost:8000/geteditemployee/${id}`);
         console.log("response: ", response);
@@ -81,6 +81,7 @@ const Manageemployee = () => {
 
  
     };
+    // get all emp
       const getAllemployee = async () => {
         try {
           const response = await axios.get(`http://localhost:8000/employeedetails/${id}`);
@@ -92,6 +93,7 @@ const Manageemployee = () => {
         }
       };
 
+      // update leaves
       const handlesubmit = async (id) => {
         try {
             const UserData = { ...singeemloyee};
@@ -105,7 +107,6 @@ const Manageemployee = () => {
                    setOpenSnackbar(true);
     setTimeout(() => {
       setOpenSnackbar(false);
-      //window.location.reload(false);
     }, 3000);
   
     }
@@ -114,9 +115,7 @@ const Manageemployee = () => {
     useEffect(() => {
         console.log('asdasd')
 fetchSingleCustomer()
-        // return () => {
-        //   console.log('Cleanup Function');
-        //  }
+        
     }, [Delete , employeeBoolean ])
     
     return (

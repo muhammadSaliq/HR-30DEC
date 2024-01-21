@@ -36,7 +36,6 @@ function App() {
               <Route path={"/editemployee/:id"} element={<Editemployee />} />
               <Route path={"/employeealert"} element={<EmployeeAlert />} />
 
-              <Route path={"/leave"} element={<Leaveform />} />
               <Route path={"/Manage/:id"} element={<ManageEmployee />} />
               <Route path={"/Attrition"} element={<Employeeattrition />} />
               <Route path={"/PositiveAttrition"} element={<Positiveattrition />} />

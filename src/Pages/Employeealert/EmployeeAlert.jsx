@@ -171,6 +171,7 @@ let datetime = currDate + ' ' + currTime;
 
   }
 
+  // all department function
   const getAlldepartments = async () => {
 
     try {
@@ -187,7 +188,7 @@ let datetime = currDate + ' ' + currTime;
 
     
     
-    
+    // get employee that is about to leave
       const getAllemployee = async () => {
         try {
           const response = await axios.get(`http://localhost:8000/employeealert`);

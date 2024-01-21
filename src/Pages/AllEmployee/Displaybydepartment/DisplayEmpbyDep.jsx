@@ -98,7 +98,7 @@ const DisplayEmpbyDep = () => {
     const [departmentBoolean, setdepartmentBoolean] = useState(false);
     const [editboolean, seteditboolean] = useState(false);
 
-    //edit employee
+    //edit employee data
 
     const [responce  , setResponce] = useState("");
   const [UpdatedbyUser  , setUpdatedbyUser] = useState("");
@@ -115,8 +115,9 @@ let datetime = currDate + ' ' + currTime;
     const date = today.getDate();
     return `${month}/${date}/${year}`;
   }
-  const [currentDate, setCurrentDate] = useState(getDate());
+  const [currentDate, setCurrentDate] = useState(getDate());  //udated date
 
+  //single emloyee data
   const fetchSingleCustomer = async(id) => {
       const response = await axios.get(`http://localhost:8000/geteditemployee/${id}`);
       console.log("response: ", response);
@@ -124,6 +125,7 @@ let datetime = currDate + ' ' + currTime;
     setsingeemloyee(response.data.Product);
           }
 
+          //handle change in textfield event
   const handlecchange = (ev) => {
       const {value, name} = ev.target;
       setsingeemloyee(()=> {
@@ -135,7 +137,7 @@ let datetime = currDate + ' ' + currTime;
 
   };
   
-
+// submit editted employee data
   const handlesubmit = async (id) => {
     try {
         const UserData = { ...singeemloyee};
@@ -153,6 +155,8 @@ let datetime = currDate + ' ' + currTime;
       }
 
 }
+
+//set hover funtionalities show
 const handleMouseEnter = (id) => {
   setHoverStates({ ...hoverStates, [id]: true }); // Set hover state for specific button
 };
@@ -185,6 +189,7 @@ const handleMouseLeaveManage = (id) => {
   setHoverStatesManage({ ...hoverStatesManage, [id]: false }); // Reset hover state for specific button
 };
 
+//get all dep from DB
 const getAlldepartments = async () => {
 
   try {
@@ -201,7 +206,7 @@ const getAlldepartments = async () => {
 
   
   
-  
+  // get all employee from DB w.r.t dep
 const getAllemployee = async () => {
   try {
     const response = await axios.get(`http://localhost:8000/deaprtmentemployee/${department}`);
@@ -212,6 +217,7 @@ const getAllemployee = async () => {
     console.log("error in getting all Departments", error);
   }
 };
+//delete employee
     const deleteData = async (id)=>{
       try {
         const response = await axios.get(`http://localhost:8000/deleteemployee/${id}`)
@@ -232,17 +238,13 @@ const getAllemployee = async () => {
       getAllemployee()
       setemployeeBoolean(false)
       seteditboolean(false)
-      // return () => {
-      //   console.log('Cleanup Function');
-      //  }
+      
   }, [Delete , employeeBoolean , editboolean])
 
   useEffect(() => {
     console.log('asdasd')
     getAlldepartments()
-    // return () => {
-    //   console.log('Cleanup Function');
-    //  }
+    
 }, [Delete , departmentBoolean ])
 
 //   useEffect (()=> {
@@ -250,6 +252,8 @@ const getAllemployee = async () => {
 
 // },[]);
   
+
+// get hr user profile at render
 useEffect(() => {
 
 const getProfile = async () => {
@@ -426,6 +430,8 @@ style={{ marginBottom: '1rem' , marginTop: '1rem' }} // Applying margin bottom u
               <h2 className="heado">Employees</h2>
           </div>
           <div className='flex  justify-evenly flex-wrap my-4' >
+            
+            {/* display employee */}
           {allemployees.map((value) => (
                   <div style={containerStyle}>
       <div className="divss">
@@ -440,6 +446,8 @@ style={{ marginBottom: '1rem' , marginTop: '1rem' }} // Applying margin bottom u
       <span className="text-center inline mt-2">Years in the Company: {value.YearsAtCompany}</span>
 
       <div className="flex mt-4 space-x-3 md:mt-6 justify-center">
+
+        {/* buttons for functionalities */}
       <button
       onClick={() => {
         navigate(`/Employeedetails/${value._id}`, { replace: true });

@@ -123,6 +123,7 @@ let datetime = currDate + ' ' + currTime;
     }
     const [currentDate, setCurrentDate] = useState(getDate());
 
+    // single employee data
     const fetchSingleCustomer = async(id) => {
         const response = await axios.get(`http://localhost:8000/geteditemployee/${id}`);
         console.log("response: ", response);
@@ -141,6 +142,8 @@ let datetime = currDate + ' ' + currTime;
  
     };
 
+
+    // hover funccctions for display
     const handleMouseEnter = (id) => {
       setHoverStates({ ...hoverStates, [id]: true }); // Set hover state for specific button
     };
@@ -173,7 +176,7 @@ let datetime = currDate + ' ' + currTime;
       setHoverStatesManage({ ...hoverStatesManage, [id]: false }); // Reset hover state for specific button
     };
     
-
+//edit employee api integration
     const handlesubmit = async (id) => {
       try {
         setsingeemloyee((prevEmployee) => {
@@ -204,6 +207,7 @@ let datetime = currDate + ' ' + currTime;
 
   }
 
+  // get all dep to edit employee deppartment
   const getAlldepartments = async () => {
 
     try {
@@ -220,7 +224,7 @@ let datetime = currDate + ' ' + currTime;
 
     
     
-    
+    //all employee 
       const getAllemployee = async () => {
         try {
           const response = await axios.get(`http://localhost:8000/allemployees`);
@@ -246,28 +250,22 @@ let datetime = currDate + ' ' + currTime;
     }, 3000);
       };
 
+//display all employee on page load
     useEffect(() => {
         console.log('asdasd')
         getAllemployee()
         setemployeeBoolean(false)
         seteditboolean(false)
-        // return () => {
-        //   console.log('Cleanup Function');
-        //  }
-    }, [Delete , employeeBoolean , editboolean])
 
+    }, [Delete , employeeBoolean , editboolean])
+// get all department on load
     useEffect(() => {
       console.log('asdasd')
       getAlldepartments()
-      // return () => {
-      //   console.log('Cleanup Function');
-      //  }
+
   }, [Delete , departmentBoolean ])
 
-//   useEffect (()=> {
-//     fetchSingleCustomer()
-
-// },[]);
+// get user profile on load
     
 useEffect(() => {
 

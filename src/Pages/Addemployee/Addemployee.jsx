@@ -14,7 +14,10 @@ const ageRegex = /^[0-9]+$/;
 const dailyRateRegex=/^[0-9]+$/;
 const numericRegex = /^[0-9]+$/;
 const alphabetRegex = /^[a-zA-Z]+$/;  
+
+
 const Addemployee = () => {
+
     const navigate = useNavigate();
     const [emloyeename, setemloyeename] = useState("");
     const [age, setAge] = useState("");
@@ -57,7 +60,7 @@ const Addemployee = () => {
     const [departmentBoolean, setdepartmentBoolean] = useState(false);
     const [Delete , setdelete] = useState(false);
     
-    
+    //error states
     const [ageerror, setageerror] = useState();
     const [nameError, setnameError] = useState();
     const [businessTravelerror, setBusinessTravelerror] = useState();
@@ -106,6 +109,7 @@ const Addemployee = () => {
 //result
 const [resultattr , setresultattr] = useState(false);
 
+// get all departments
       const getAlldepartments = async () => {
 
         try {
@@ -118,7 +122,7 @@ const [resultattr , setresultattr] = useState(false);
         }
       };
 
-
+//add employee data api integration
     const Addemployeedata = async () => {
       setCreatedbyUser(responce.email)
       console.log("cre",CreatedbyUser)
@@ -177,6 +181,41 @@ if (emloyeename && age && businessTravel && dailyRate && department && distanceF
               setSnackbarMessage('Employee successfully registered');
               setSnackbarSeverity('success');
               setOpenSnackbar(true);
+              setemloyeename("")
+              setAge("")
+              setBusinessTravel("");
+              setDailyRate("");
+              setDepartment("");
+              setDistanceFromHome("");
+              setEducation("");
+
+              setEducationField("");
+              setEmployeeNumber("");
+              setEnvironmentSatisfaction("");
+              setGender("");
+              setHourlyRate("");
+              setJobInvolvement("");
+              setJobLevel("");
+              setJobRole("");
+              setJobSatisfaction("");
+              setMaritalStatus("");
+              setMonthlyIncome("");
+              setOverTime("");
+              setPercentSalaryHike("");
+              setPerformanceRating("");
+              setRelationshipSatisfaction("");
+              setStandardHours("");
+              setStockOptionLevel("");
+              setTotalWorkingYears("");
+              setTrainingTimesLastYear("");
+              setWorkLifeBalance("");
+              setYearsAtCompany("");
+              setYearsInCurrentRole("");
+              setYearsSinceLastPromotion("");
+              setYearsWithCurrManager("");
+              setMonthlyRate("");
+              setNumCompaniesWorked("");
+              setOver18("");
 
             } else {
               console.log('Employee failed');
@@ -199,14 +238,12 @@ if (emloyeename && age && businessTravel && dailyRate && department && distanceF
             
         if (!emloyeename) {
             setnameError("Please enter name");
-            //setPasswordError(!password);
-            //setReTypePasswordError(!reTypepassword);
             return;
           }
-        //  if (!age) {
-        //       setageerror("please enter age");
-        //       return;
-        //     }
+
+          //validations
+
+          
         if (!age || !ageRegex.test(age.toString()) || age < 18 || age > 100 || age.toString().includes('e')) {
           if (!age) {
             setageerror("Please Enter Your Age in Integer");
@@ -250,11 +287,6 @@ if (emloyeename && age && businessTravel && dailyRate && department && distanceF
               }
 
 
-            //            if (!distanceFromHome ) {
-            //             setDistanceFromHomeerror("please enter distance ");
-            //   return;
-            // }
-
             if (!distanceFromHome || !numericRegex.test(distanceFromHome.toString()) || distanceFromHome.toString().includes('e')) {
               if (!distanceFromHome) {
                 setDistanceFromHomeerror("Please enter distance");
@@ -268,10 +300,6 @@ if (emloyeename && age && businessTravel && dailyRate && department && distanceF
               return;
             }
 
-            // if (!education || education > 5) {
-            //     seteducationerror("please enter eduation B/W 1 to 5");
-            //     return;
-            //   }
             if (!education || !numericRegex.test(education.toString()) || education <= 0 || education > 5 || education.toString().includes('e')) {
               if (!education) {
                 seteducationerror("Please enter education");
@@ -290,22 +318,6 @@ if (emloyeename && age && businessTravel && dailyRate && department && distanceF
                                 seteducationFielderror("Please enter Education Field");
                 return;
               }
-              // if (!educationField || !alphabetRegex.test(educationField) || educationField.length <= 0 || educationField.length > 4 || educationField.includes('e')) {
-              //   if (!educationField) {
-              //     seteducationFielderror("Please enter education field");
-              //   } else if (!alphabetRegex.test(educationField)) {
-              //     seteducationFielderror("Please enter a valid education field (alphabets only)");
-              //   } else if (educationField.length <= 0 || educationField.length > 4) {
-              //     seteducationFielderror("Education field length should be greater than 0 and less than or equal to 4");
-              //   } else if (educationField.includes('e')) {
-              //     seteducationFielderror("Education field should not contain the letter 'e'");
-              //   }
-              //   return;
-              // }
-//               if (!employeeNumber) {
-//                 setEmployeeNumbererror("please enter employee number");
-// return;
-// }
 
 if (!employeeNumber || !numericRegex.test(employeeNumber) || employeeNumber <= 0 || employeeNumber.length > 4 || employeeNumber.includes('e')) {
   if (!employeeNumber) {
@@ -319,10 +331,7 @@ if (!employeeNumber || !numericRegex.test(employeeNumber) || employeeNumber <= 0
   }
   return;
 }
-// if (!environmentSatisfaction  || environmentSatisfaction > 4) {
-//     setenvironmentSatisfactionerror("please enter employee satisfaction B/W 1 to 4");
-// return;
-// }
+
 if (!environmentSatisfaction || !numericRegex.test(environmentSatisfaction) || environmentSatisfaction <= 0 || environmentSatisfaction > 4 || environmentSatisfaction.includes('e')) {
   if (!environmentSatisfaction) {
     setenvironmentSatisfactionerror("Please enter environment satisfaction");
@@ -341,10 +350,7 @@ if (!gender || gender == "Select Gender") {
 setgendererror("please select a gender");
 return;
 }
-// if (!hourlyRate) {
-//     setHourlyRateerror("please enter hourly rate");
-// return;
-// }
+
 if (!environmentSatisfaction || !numericRegex.test(environmentSatisfaction) || environmentSatisfaction <= 0 || environmentSatisfaction > 4 || environmentSatisfaction.includes('e')) {
   if (!environmentSatisfaction) {
     setenvironmentSatisfactionerror("Please enter environment satisfaction");
@@ -358,10 +364,6 @@ if (!environmentSatisfaction || !numericRegex.test(environmentSatisfaction) || e
   return;
 }
 
-// if (!jobInvolvement || jobInvolvement > 4) {
-//     setJobInvolvementerror("please enter job involvement B/W 1 to 4");
-// return;
-// }
 
 if (!jobInvolvement || !numericRegex.test(jobInvolvement) || jobInvolvement <= 0 || jobInvolvement > 4 || jobInvolvement.includes('e')) {
   if (!jobInvolvement) {
@@ -386,15 +388,6 @@ if (!jobRole || jobRole === "Enter Job Role") {
 return;
 }
 
-// if (!maritalStatus || maritalStatus == "Enter Marital Status") {
-//   setMaritalStatus("");
-//   setMaritalStatuserror("please enter martial status");
-//   return;
-// }
-// if (!jobSatisfaction || jobSatisfaction > 4) {
-//     setJobSatisfactionerror("please enter job satisfation B/W 1 to 4");
-// return;
-// }
 
 if (!jobSatisfaction || !numericRegex.test(jobSatisfaction) || jobSatisfaction <= 0 || jobSatisfaction > 4 || jobSatisfaction.includes('e')) {
   if (!jobSatisfaction) {
@@ -421,10 +414,6 @@ return;
 }
 
 
-// if (!monthlyRate) {
-//     setMonthlyRateerror("please enter monthly rate");
-// return;
-// }
 
 if (!monthlyRate || isNaN(monthlyRate) ||  monthlyRate.toString().includes('e')) {
   if (!monthlyRate) {
@@ -438,11 +427,6 @@ if (!monthlyRate || isNaN(monthlyRate) ||  monthlyRate.toString().includes('e'))
   }
   return;
 }
-
-// if (!numCompaniesWorked) {
-//     setNumCompaniesWorkederror("please enter total companies");
-// return;
-// }
 
 if (!numCompaniesWorked || isNaN(numCompaniesWorked) ||  numCompaniesWorked.toString().includes('e')) {
   if (!numCompaniesWorked) {
@@ -467,10 +451,7 @@ if (!numCompaniesWorked || isNaN(numCompaniesWorked) ||  numCompaniesWorked.toSt
                 setOverTimeerror("please select an option");
                 return;
               }
-// if (!percentSalaryHike) {
-//     setPercentSalaryHikeerror("please enter salary hike");
-// return;
-// }
+
 
 
 if (!percentSalaryHike || isNaN(percentSalaryHike) ||  percentSalaryHike.toString().includes('e')) {
@@ -487,13 +468,6 @@ if (!percentSalaryHike || isNaN(percentSalaryHike) ||  percentSalaryHike.toStrin
 }
 
 
-
-
-// if (!performanceRating || performanceRating > 4) {
-//     setPerformanceRatingerror("please enter performane rating B/W 1 to 4");
-// return;
-// }
-
 if (!performanceRating || isNaN(performanceRating) || performanceRating <= 0 || performanceRating > 4 || performanceRating.toString().includes('e')) {
   if (!performanceRating) {
     setPerformanceRatingerror("Please enter performance rating");
@@ -507,11 +481,6 @@ if (!performanceRating || isNaN(performanceRating) || performanceRating <= 0 || 
   return;
 }
 
-
-// if (!relationshipSatisfaction || relationshipSatisfaction > 4) {
-//     setRelationshipSatisfactionerror("please enter satisfaction B/W 1 to 4");
-// return;
-// }
 
 if (!relationshipSatisfaction || isNaN(relationshipSatisfaction) || relationshipSatisfaction <= 0 || relationshipSatisfaction > 4 || relationshipSatisfaction.toString().includes('e')) {
   if (!relationshipSatisfaction) {
@@ -527,11 +496,6 @@ if (!relationshipSatisfaction || isNaN(relationshipSatisfaction) || relationship
 }
 
 
-// if (!stockOptionLevel || stockOptionLevel > 3) {
-//     setStockOptionLevelerror("please enter stock option B/W 0 to 3");
-// return;
-// }
-
 
 if (!stockOptionLevel || isNaN(stockOptionLevel) || stockOptionLevel < 0 || stockOptionLevel > 3 || stockOptionLevel.toString().includes('e')) {
   if (!stockOptionLevel) {
@@ -546,10 +510,6 @@ if (!stockOptionLevel || isNaN(stockOptionLevel) || stockOptionLevel < 0 || stoc
   return;
 }
 
-// if (!standardHours) {
-//     setStandardHourserror("please enter standard hours");
-// return;
-// } 
 
 if (!standardHours || isNaN(standardHours) ||  standardHours.toString().includes('e')) {
   if (!standardHours) {
@@ -565,11 +525,6 @@ if (!standardHours || isNaN(standardHours) ||  standardHours.toString().includes
 }
 
 
-// if (!totalWorkingYears) {
-//     setTotalWorkingYearserror("please enter working years");
-// return;
-// }
-
 
 if (!totalWorkingYears || isNaN(totalWorkingYears) ||  totalWorkingYears.toString().includes('e')) {
   if (!totalWorkingYears) {
@@ -584,10 +539,6 @@ if (!totalWorkingYears || isNaN(totalWorkingYears) ||  totalWorkingYears.toStrin
   return;
 }
 
-// if (!trainingTimesLastYear || trainingTimesLastYear > 6) {
-//     setTrainingTimesLastYearerror("please enter training times B/W 0 to 6");
-// return;
-// } 
 
 if (!trainingTimesLastYear || isNaN(trainingTimesLastYear) || trainingTimesLastYear <= 0 || trainingTimesLastYear > 6 || trainingTimesLastYear.toString().includes('e')) {
   if (!trainingTimesLastYear) {
@@ -602,10 +553,6 @@ if (!trainingTimesLastYear || isNaN(trainingTimesLastYear) || trainingTimesLastY
   return;
 }
 
-// if (!workLifeBalance || workLifeBalance > 4) {
-//     setWorkLifeBalanceerror("please enter work life balance  B/W 1 to 6");
-// return;
-// }
 
 if (!workLifeBalance || isNaN(workLifeBalance) || workLifeBalance <= 0 || workLifeBalance > 4 || workLifeBalance.toString().includes('e')) {
   if (!workLifeBalance) {
@@ -675,9 +622,7 @@ return;
      useEffect(() => {
         console.log('asdasd')
         getAlldepartments()
-        // return () => {
-        //   console.log('Cleanup Function');
-        //  }
+
     }, [Delete , departmentBoolean ])
 
 
@@ -702,9 +647,7 @@ return;
       <div className="relative z-0 w-full mb-6 group">
       <TextField fullWidth value={age} onChange={(event) => { setAge(event.target.value); setageerror("") }} type = "number" name="age" label="Age" variant="outlined" />
                 {ageerror && <p className="error-message">{ageerror}</p>} 
-               {/*} <TextField fullWidth value={businessTravel} onChange={(event) => { setBusinessTravel(event.target.value); setBusinessTravelerror("") }} name="businessTravel" label="Business Travel" variant="outlined" />
-                
-    */}         </div>
+        </div>
 
         <div className="relative z-0 w-full mb-6 group">
 
@@ -747,11 +690,6 @@ return;
                 {educationerror && <p className="error-message">{educationerror}</p>} 
                 
     </div>
-    {/* <div className="relative z-0 w-full mb-6 group">
-    <TextField fullWidth value={educationField} onChange={(event) => { setEducationField(event.target.value); seteducationFielderror("") }} name="educationField" label="Education Field" variant="outlined" />
-                {educationFielderror && <p className="error-message">{educationFielderror}</p>}
-                
-    </div> */}
 
       <div className="relative z-0 w-full mb-6 group">
             <select id="educationField" name='educationField'onChange={(event) => { setEducationField(event.target.value); seteducationFielderror("") }} className=" border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 0   ">
@@ -811,8 +749,7 @@ return;
    </div>
    <div className="relative z-0 w-full mb-6 group">
 
-   {/* <TextField fullWidth value={jobRole} onChange={(event) => { setJobRole(event.target.value); setJobRoleerror("") }} name="jobRole" label="Job Role" variant="outlined" />
-                {jobRoleerror && <p className="error-message">{jobRoleerror}</p>} */}
+
 
                 <div className="relative z-0 w-full mb-6 group">
       <select id="jobRole" name='jobRole'onChange={(event) => { setJobRole(event.target.value); setJobRoleerror("") }} className=" border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 0   ">

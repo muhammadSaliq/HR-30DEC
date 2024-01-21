@@ -49,7 +49,7 @@ const Department = () => {
     const [olddepartmentname, setolddepartmentname] = useState("");
 
 
-
+// single department function
     const fetchSingleDepartment = async(id) => {
         const response = await axios.get(`http://localhost:8000/geteditdepaprtment/${id}`);
         console.log("response: ", response);
@@ -57,6 +57,7 @@ const Department = () => {
       setSingleDepartment(response.data.Product);
             }
 
+            //hanle department change function
     const handlecchange = (ev) => {
         const {value, name} = ev.target;
         setSingleDepartment(()=> {
@@ -138,6 +139,8 @@ const Department = () => {
       const handleDialogClose = () => {
         setOpenDialog(false);
       };
+
+      //disapprove department function
       const deleteData = async (id, name)=>{
         try {
           const response = await axios.get(`http://localhost:8000/deletedepartment/${id}/${name}`)
@@ -150,6 +153,8 @@ const Department = () => {
         setactive(false)
         //window.location.reload(false);
       };
+
+      //approve department function
       const approveData = async (id, name)=>{
         try {
           const response = await axios.get(`http://localhost:8000/activedepartment/${id}/${name}`)
@@ -172,7 +177,7 @@ const Department = () => {
         handleDialogClose();
       };
     
-    
+    //all dep function
       const getAlldepartments = async () => {
         try {
           const response = await axios.get(`http://localhost:8000/alldepartments`);
@@ -184,6 +189,7 @@ const Department = () => {
         }
       };
 
+      // add dep function
     const AddDepartment = async () => {
       if (departmentname && contact && departmentmanager) {
 
@@ -228,6 +234,8 @@ const Department = () => {
   const handleEditDialogClose = () => {
     setOpenEditDialog(false);
 };
+
+//edit department funcction
  const handleEdit = async (id , name) => {
         const UserData = { ...SingleDepartment};
         const response = await axios.put(`http://localhost:8000/editdepartment/${id}/${name}/${olddepartmentname}`, UserData);
