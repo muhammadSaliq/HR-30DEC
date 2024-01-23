@@ -11,7 +11,6 @@ import AllEmployee from "./Pages/AllEmployee/Allemployee";
 import DisplayEmpbyDep from "./Pages/AllEmployee/Displaybydepartment/DisplayEmpbyDep";
 import EmployeeDetails from "./Pages/Employeedetails/EmployeeDetails";
 import Editemployee from "./Pages/Editemployee/Editemployee";
-import Leaveform from "./Pages/LeavePPage/Leaveform";
 import ManageEmployee from "./Pages/AllEmployee/Manage/ManageEmployee"
 import Employeeattrition from "./Pages/Attrition/EmployeeAttrition";
 import Negativeattrition from "./Pages/Attrition/Attritionstate/NegativeAttriton";

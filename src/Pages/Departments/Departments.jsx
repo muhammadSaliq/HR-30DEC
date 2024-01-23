@@ -352,7 +352,7 @@ const Department = () => {
               autoFocus
               margin='dense'
               id='departmentname'
-              label='Department Name'
+              placeholder='Department Name'
               name='departmentname'
               type='text'
               fullWidth
@@ -362,7 +362,7 @@ const Department = () => {
               autoFocus
               margin='dense'
               id='contact'
-              label='Email/Contact'
+              placeholder='Email/Contact'
               type='text'
                             name='contact'
               fullWidth
@@ -372,7 +372,7 @@ const Department = () => {
               autoFocus
               margin='dense'
               id='departmentmanager'
-              label='Department Manager'
+              placeholder='Department Manager'
               type='text'
               name='departmentmanager'
               fullWidth
@@ -382,7 +382,7 @@ const Department = () => {
               autoFocus
               margin='dense'
               id='description'
-              label='Department Description'
+              placeholder='Department Description'
               type='text'
               name='description'
               fullWidth

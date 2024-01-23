@@ -14,7 +14,73 @@ import DialogTitle from '@mui/material/DialogTitle';
 const Negativeattrition = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [randomStrategies, setRandomStrategies] = useState([]);
+  const [EnvironmentSatisfaction, setEnvironmentSatisfaction] = useState();
+  const [JobInvolvement, setJobInvolvement] = useState();
+  const [JobSatisfaction, setJobSatisfaction] = useState();
+  const [message, setmessage] = useState('');
 
+
+  const retentionstrategy = () => {
+    if (EnvironmentSatisfaction === '2' && JobInvolvement === '2') {
+      setmessage(' Competitive Compensation and Benefits  Remote Work Options  Career Path Planning  Employee Engagement Surveys  Professional Development Opportunities')
+    }
+    else if (EnvironmentSatisfaction === '1' && JobInvolvement === '1' && JobSatisfaction === '2') {
+      setmessage("Team Building Activities  Work-Life Balance Support  Inclusive and Diverse Work Environment  Recognition of Achievements  Family-Friendly Policies")
+    }
+
+    else {
+      setmessage([' Competitive Compensation and Benefits',
+      'Professional Development Opportunities',
+      'Flexible Work Schedules',
+      'Remote Work Options',
+      'Employee Recognition Programs',
+      'Health and Wellness Programs',
+      'Career Path Planning',
+      'Regular Feedback and Performance Reviews',
+      'Team Building Activities',
+      'Employee Assistance Programs (EAP)',
+      'Clear Communication Channels',
+      'Work-Life Balance Support',
+      'Mentoring and Coaching Programs',
+      'Inclusive and Diverse Work Environment',
+      'Opportunities for Skill Enhancement',
+      'Employee Engagement Surveys',
+      'Transparent Leadership',
+      'Recognition of Achievements',
+      'Family-Friendly Policies',
+      'Social Events and Gatherings',
+      'Continuous Learning Opportunities',
+      'Tuition Reimbursement',
+      'Financial Education Programs',
+      'Employee Resource Groups (ERGs)',
+      'Volunteer and Community Engagement Initiatives',
+      'Health Insurance Benefits',
+      'Flexible Spending Accounts (FSAs)',
+      'Compressed Workweeks',
+      'Cross-Training and Job Rotation',
+      'Fun and Relaxation Spaces in the Workplace',
+      'Employee Stock Ownership Plans (ESOPs)',
+      'Generous Paid Time Off (PTO)',
+      'Regular Team Building Retreats',
+      'Leadership Development Programs',
+      'Open-door Policy for Communication',
+      'Employee of the Month Recognition',
+      'Casual Dress Code Days',
+      'Adoption Assistance Programs',
+      'Sabbatical Leave Options',
+      'Opportunities for Internal Mobility',
+      'Recognition for Years of Service',
+      'Childcare Assistance Programs',
+      'Wellness Challenges and Competitions',
+      'Employee Loans and Financial Support',
+      'Professional Memberships and Associations',
+      'Technology and Equipment Allowances',
+      'Extended Maternity and Paternity Leave',
+      'Employee Discount Programs',
+      'Continuous Employee Training',
+      'Collaborative and Supportive Team Culture'])
+    }
+  }
   const allRetentionStrategies = [
    ' Competitive Compensation and Benefits',
 'Professional Development Opportunities',
