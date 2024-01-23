@@ -183,24 +183,24 @@ if (emloyeename && age && businessTravel && dailyRate && department && distanceF
               setOpenSnackbar(true);
               setemloyeename("")
               setAge("")
-              setBusinessTravel("");
+              //setBusinessTravel("");
               setDailyRate("");
-              setDepartment("");
+              //setDepartment("");
               setDistanceFromHome("");
               setEducation("");
 
-              setEducationField("");
+              //setEducationField("");
               setEmployeeNumber("");
               setEnvironmentSatisfaction("");
-              setGender("");
+             // setGender("");
               setHourlyRate("");
               setJobInvolvement("");
               setJobLevel("");
-              setJobRole("");
+              //setJobRole("");
               setJobSatisfaction("");
-              setMaritalStatus("");
+             // setMaritalStatus("");
               setMonthlyIncome("");
-              setOverTime("");
+            //  setOverTime("");
               setPercentSalaryHike("");
               setPerformanceRating("");
               setRelationshipSatisfaction("");
@@ -215,7 +215,7 @@ if (emloyeename && age && businessTravel && dailyRate && department && distanceF
               setYearsWithCurrManager("");
               setMonthlyRate("");
               setNumCompaniesWorked("");
-              setOver18("");
+              //setOver18("");
 
             } else {
               console.log('Employee failed');
