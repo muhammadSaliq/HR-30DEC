@@ -21,6 +21,7 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {faListCheck} from '@fortawesome/free-solid-svg-icons';
 import {faStreetView} from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 
 const AllEmployee = () => {
@@ -35,8 +36,10 @@ const AllEmployee = () => {
     const [hoverStatesManage, setHoverStatesManage] = useState({});
     const [alertMessage, setAlertMessage] = useState('');
 const [Alertedit, setAlertedit] = useState(false);
-  
-
+const [results, setResults] = useState([]);
+const [resultbool, setresultbool] = useState(false);
+const [showbool, setshowbool] = useState(false);
+const [dialogOpen, setDialogOpen] = useState(false);
 
     const buttonStyle = {
         background: '#EC0C36',
@@ -104,6 +107,17 @@ const [Alertedit, setAlertedit] = useState(false);
       const [departmentBoolean, setdepartmentBoolean] = useState(false);
       const [editboolean, seteditboolean] = useState(false);
 
+      //Search filter
+      const [searchInput, setSearchInput] = useState('');
+      const [selectedOption, setSelectedOption] = useState('');
+      const [selectedOptionposition, setSelectedOptionposition] = useState('');
+      const [selectedOptiongender, setSelectedOptiongender] = useState('');
+      const [ageValue, setageValue] = useState('');
+      const [empIdValue, setempIDValue] = useState('');
+
+      
+
+
       //edit employee
 
       const [responce  , setResponce] = useState("");
@@ -141,6 +155,44 @@ let datetime = currDate + ' ' + currTime;
 
  
     };
+
+    //searchfilter
+    // Event handler for input change
+      const handleInputChange = (event) => {
+        setSearchInput(event.target.value);
+      };
+
+      // Event handler for select change
+      const handleSelectChange = (event) => {
+        setSelectedOption(event.target.value);
+      };
+
+      const handleSelectpositionChange = (event) => {
+        setSelectedOptionposition(event.target.value);
+      };
+      const handleSelectgenderChange = (event) => {
+        setSelectedOptiongender(event.target.value);
+      };
+
+      const handleAgeChange = (event) => {
+        setageValue(event.target.value);
+      };
+
+      const handleempIdChange = (event) => {
+        setempIDValue(event.target.value)
+      }
+
+      const handleClearFilters = () => {
+
+        setempIDValue('');
+        setageValue('');
+        setSelectedOption('');
+        setSelectedOptiongender('');
+        setSelectedOptionposition('');
+    
+
+      };
+
 
 
     // hover funccctions for display
@@ -220,6 +272,23 @@ let datetime = currDate + ' ' + currTime;
     }
   };
 
+  const imageStyle = {
+    width: '50px',
+    height: '50px',
+    marginLeft: '210px',
+    backgroundColor: '#f2f2f2',
+    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+    padding: '10px',
+    borderRadius: '5px',
+  };
+    const handleImageClick = () => {
+      setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+      setDialogOpen(false);
+  };
+
     
 
     
@@ -266,6 +335,8 @@ let datetime = currDate + ' ' + currTime;
   }, [Delete , departmentBoolean ])
 
 // get user profile on load
+
+
     
 useEffect(() => {
 
@@ -298,9 +369,38 @@ useEffect(() => {
 
 }, [])
 
+const performSearch = async () => {
+  if (selectedOption === "Any Department") {
+    setSelectedOption("")
+
+    setDialogOpen(false)
+  }
+
+
+
+  try {
+    const response = await axios.get(
+      `http://localhost:8000/api/searchlist?EmployeeNumber=${empIdValue}&Age=${ageValue}&JobRole=${selectedOptionposition}&Gender=${selectedOptiongender}&Department=${selectedOption}`
+    );
+    console.log("Search results: ", response.data);
+    setResults(response.data);
+    console.log("res", results);
+    setresultbool(true);
+    setshowbool(true);
+  } catch (error) {
+    console.log("Error in performing search: ", error);
+  }
+};
+
+
+
     return (
         <>
         <DashNavbar/>
+
+       
+
+
 
         <div  >
       {/* Dialog */}
@@ -456,6 +556,176 @@ useEffect(() => {
         <div className='rootcontainer2' style={{ backgroundColor: 'white' }}>
                 <h2 className="heado">Employees</h2>
             </div>
+            {/* <div onClick={handleImageClick}>
+                <img src={filterimaage} alt="Filter" style={imageStyle} />
+            </div> */}
+            <div onClick={handleImageClick} style={{ display: 'flex', justifyContent: 'center', paddingRight: 'sm' }}>
+    <Button 
+        variant="contained" 
+        style={{
+          width: 'auto',
+          height: '50px',
+          borderRadius: '20%', // Makes the button fully rounded
+          backgroundColor: '#f0f0f0', // Light grey background color
+          color: '#000', // Black text color
+          marginBottom: '2%'
+      }}
+      
+      
+        onClick={handleImageClick}
+    >
+        Apply Filter
+    </Button>
+</div>
+
+<Dialog open={dialogOpen} onClose={handleCloseDialog}style={{ borderRadius: '20%' }}>
+            <DialogContent style={{ borderRadius: '20%' }}>
+    <h6 style={{ fontWeight: 'bold', marginBottom: '30px' }}>Apply Filters</h6>
+
+    <div className="relative z-0 w-full mb-6 group">
+    <div className="relative z-0 w-full mb-6 group">
+    <input
+        type="text"
+        id="emp-id"
+        name="emp-id"
+        placeholder="Employee ID"
+        value={empIdValue}
+        onChange={handleempIdChange}
+        style={{ 
+            width: '250px', 
+            height: '30px', 
+            margin: '0 auto',
+            border: '1px solid #333', // Dark grey border
+            borderRadius: '5px', // Rounded corners
+            fontSize: '14px', // Adjust font size
+      paddingLeft: '5px', // Add padding for the text
+        }}
+    />
+</div>
+
+<div className="relative z-0 w-full mb-6 group">
+    <input
+        type="text"
+        id="age"
+        name="age"
+        placeholder="Age"
+        value={ageValue}
+        onChange={handleAgeChange}
+        style={{ 
+            width: '250px', 
+            height: '30px', 
+            margin: '0 auto',
+            border: '1px solid #333', // Dark grey border
+            borderRadius: '5px', // Rounded corners
+            fontSize: '14px', // Adjust font size
+      paddingLeft: '5px', // Add padding for the text
+        }}
+    />
+</div>
+
+
+
+</div>
+    <div className="relative z-0 w-full mb-6 group">
+        <select
+            id="department"
+            name="department"
+            className="bg-gray-200 text-black text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 0"
+            style={{ maxWidth: '300px', margin: '0 auto' }}
+            value={selectedOption}
+            onChange={handleSelectChange}
+        >
+            <option>Department</option>
+            {alldepartmentss.map((value) => (
+                <option value={value.departmentname}>{value.departmentname}</option>
+            ))}
+        </select>
+    </div>
+    <div className="relative z-0 w-full mb-6 group">
+    <select id="position"
+            name="position"
+            className="bg-gray-200 text-black text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 0"
+            style={{ maxWidth: '300px', margin: '0 auto' }}
+            value={selectedOptionposition}
+            onChange={handleSelectpositionChange}>
+        <option>Enter Job Role</option>
+        <option value="Sales Executive" >Sales Executive</option>
+        <option value="Research Scientist">Research Scientist</option>
+        <option value="Laboratory Technician">Laboratory Technician</option>
+        <option value="Manufacturing Director" >Manufacturing Director</option>
+        <option value="Healthcare Representative">Healthcare Representative</option>
+        <option value="Manager">Manager</option>
+        <option value="Sales Representative">Sales Representative</option>
+        <option value="Research Director">Research Director</option>
+        <option value="Human Resources">Human Resources</option>
+
+
+</select>
+
+    </div>
+    <div className="relative z-0 w-full mb-6 group">
+        <select
+            id="gender"
+            name="gender"
+            className="bg-gray-200 text-black text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 0"
+            style={{ maxWidth: '300px', margin: '0 auto' }}
+            value={selectedOptiongender}
+            onChange={handleSelectgenderChange}
+        >
+            <option>Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+    </div>
+  
+
+
+</DialogContent>
+
+                <button
+          className="btnstylo ml-5 w-32 h-10 mb-2 text-sm bg-orange-500 text-white border border-black rounded-lg transition-colors duration-300 hover:bg-orange-600 focus:outline-none flex justify-center items-center"
+          style={{ margin: '0 auto', marginBottom: '5%' }}
+          onClick={performSearch}
+          
+        >
+          <FontAwesomeIcon icon={faSearch} className="mr-2" size="sm" />
+          Search
+        </button>
+        <button
+          className="btnstylo ml-5 w-32 h-10 mb-2 text-sm bg-orange-500 text-white border border-black rounded-lg transition-colors duration-300 hover:bg-orange-600 focus:outline-none flex justify-center items-center"
+          style={{ margin: '0 auto', marginBottom: '5%' }}
+          onClick={handleClearFilters} // Call the clear filters function on button click
+        >
+          {/* <FontAwesomeIcon icon={faSearch} className="mr-2" size="sm" /> */}
+          Clear
+        </button>
+            </Dialog>
+
+            
+ <div className='pr-12 pl-12 md:pl-40 md:pr-40'>
+ {results !== 0 ? (
+          <ul className={`PrdouctSerchUl ${showbool ? "block" : "hidden"}`}>
+          {results.map((item) => (
+            <li
+              key={item._id}
+
+              className="itemHoverEffect cursor-pointer flex items-center p-2 hover:bg-gray-100"
+            >
+              <Link to={`/Employeedetails/${item._id}`}>
+
+              <div className=''>
+                <span className="text-md font-bold">Name: {item.emloyeename}</span>
+                <span className="text-gray-600 ml-4">Age: {item.Age}</span>
+                <span className="text-orange-600 ml-4">Department: {item.Department}</span>
+              </div>
+              </Link>
+            </li>
+          ))}
+        </ul>        ) : (
+          <>Employee with this name does not exsist</>
+
+        )}
+        </div>
             <div className='flex  justify-evenly flex-wrap my-4' >
             {allemployees.map((value) => (
                     <div style={containerStyle}>

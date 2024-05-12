@@ -16,6 +16,7 @@ import Employeeattrition from "./Pages/Attrition/EmployeeAttrition";
 import Negativeattrition from "./Pages/Attrition/Attritionstate/NegativeAttriton";
 import Positiveattrition from "./Pages/Attrition/Attritionstate/PositiveAttrition";
 import EmployeeAlert from "./Pages/Employeealert/EmployeeAlert";
+import Piechartpage from "./Pages/Charts/Piechartpage";
 
 function App() {
   return (
@@ -40,7 +41,8 @@ function App() {
               <Route path={"/PositiveAttrition"} element={<Positiveattrition />} />
               <Route path={"/NegativeAttrition"} element={<Negativeattrition />} />
 
-              
+              <Route path={"/pie"} element={<Piechartpage />} />
+
 
 
             </Routes>
