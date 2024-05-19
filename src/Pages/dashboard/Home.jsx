@@ -1,13 +1,121 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import 
 { BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill}
  from 'react-icons/bs'
 import { Link } from 'react-router-dom';
- import 
- { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } 
- from 'recharts';
+import { Bar, Pie } from 'react-chartjs-2';
+import 'chart.js/auto';
+import axios from 'axios';
 
 function Home() {
+
+  const [allemployees, setallemployees] = useState([]);
+  const [alleducationield, setalleducationield] = useState([]);
+
+  const getAllemployeedep = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/employeedepartmentstotal`);
+      console.log("response: ", response);
+      setallemployees(response.data);
+    } catch (error) {
+      console.log("error in getting all Departments", error);
+    }
+  };
+
+  const employeeducationfieldtotal = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/employeeducationfieldtotal`);
+      console.log("response:2 ", response);
+      setalleducationield(response.data);
+      console.log("res2", response.data.lstotal);
+    } catch (error) {
+      console.log("error in getting all Departments", error);
+    }
+  };
+  useEffect(() => {
+    console.log('asdasd')
+    getAllemployeedep()
+    employeeducationfieldtotal()
+
+}, [])
+
+
+  const barChartData = {
+    labels: ['HR Department', 'IT Department', 'Financial department', 'Strategic division', 'Kiet Departments of Sciences', 'IT'],
+    datasets: [
+      {
+        label: 'Employees Per Department',
+        data: [`${allemployees.hrtotal}`, `${allemployees.itreasult}`, `${allemployees.fitotal}`, `${allemployees.sttotal}`, `${allemployees.kitotal}`, `${allemployees.itdeptotal}`],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+  const pieChartData = {
+    labels: ['Life Sciences', 'Medical', 'Marketing', 'Technical Degree', 'Human Resources', 'Other'],
+    datasets: [
+
+      {
+        label: 'My First Dataset',
+        data: [`${alleducationield.lstotal}`, `${alleducationield.mereasult}`, `${alleducationield.martotal}`, `${alleducationield.tdtotal}`, `${alleducationield.hrtotal}`, `${alleducationield.ottotal}`],
+
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const barContainerStyle = {
+    width: '100%',
+    height: '60px', // Width for bar chart container
+    paddingBottom: '45%', // Maintain a 1:1 aspect ratio for the chart (adjust as needed)
+    position: 'relative', // Position relative to allow for absolute positioning of the chart
+    marginBottom: '20px', // Add space between charts
+  };
+
+  const pieContainerStyle = {
+    width: '60%', // Width for pie chart container
+    height: '40px',
+    paddingBottom: '45%', // Maintain a 1:1 aspect ratio for the chart (adjust as needed)
+    position: 'relative', // Position relative to allow for absolute positioning of the chart
+    marginBottom: '20px', // Add space between charts
+  };
+
+  const chartStyle = {
+    position: 'absolute', // Position the chart absolutely within its container
+    width: '100%', // Chart takes up 100% width of the container
+    height: '100%', // Chart takes up 100% height of the container
+  };
 
     const data = [
         {
@@ -86,18 +194,13 @@ function Home() {
             </div>
                         </Link>
 
-                        <Link to="/Attrition">
-
             <div className='card' style={containerStyle}>
                 <div className='card-inner'>
-                    <h3>ATTRITION PREDICTION</h3>
+                    <h3>VACANCIES</h3>
                     <BsPeopleFill className='card_icon'/>
                 </div>
                 <h1>33</h1>
             </div>
-            </Link>
-            <Link to="/employeealert">
-
             <div className='card' style={containerStyle}>
                 <div className='card-inner'>
                     <h3>ALERTS</h3>
@@ -105,55 +208,16 @@ function Home() {
                 </div>
                 <h1>42</h1>
             </div>
-            </Link>
         </div>
 
         <div className='charts'>
-            <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-            width={500}
-            height={300}
-            data={data}
-            margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-            }}
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="pv" fill="#8884d8" />
-                <Bar dataKey="uv" fill="#82ca9d" />
-                </BarChart>
-            </ResponsiveContainer>
-
-            <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                width={500}
-                height={300}
-                data={data}
-                margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                }}
-                >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-                </LineChart>
-            </ResponsiveContainer>
-
+        <div style={{ ...barContainerStyle, maxWidth: '500px' }}>
+          <Bar data={barChartData} style={chartStyle} />
         </div>
+        <div style={{ ...pieContainerStyle, maxWidth: '500px' }}>
+          <Pie data={pieChartData} style={chartStyle} />
+        </div>
+      </div>
     </main>
   )
 }
