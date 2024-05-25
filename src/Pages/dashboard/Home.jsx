@@ -11,6 +11,8 @@ function Home() {
 
   const [allemployees, setallemployees] = useState([]);
   const [alleducationield, setalleducationield] = useState([]);
+  const [jobtotal, setjobtotal] = useState([]);
+  const [otherstotal, setotherstotal] = useState([]);
 
   const getAllemployeedep = async () => {
     try {
@@ -32,10 +34,33 @@ function Home() {
       console.log("error in getting all Departments", error);
     }
   };
+  const jobtotafields = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/employeejobroletotal`);
+      console.log("response:2 ", response);
+      setjobtotal(response.data);
+      console.log("res2", response.data.lstotal);
+    } catch (error) {
+      console.log("error in getting all jobs", error);
+    }
+  };
+
+  const otherstotalfields = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/employeegendertotal`);
+      console.log("response:2 ", response);
+      setotherstotal(response.data);
+    } catch (error) {
+      console.log("error in getting all jobs", error);
+    }
+  };
+
   useEffect(() => {
     console.log('asdasd')
     getAllemployeedep()
     employeeducationfieldtotal()
+    jobtotafields();
+    otherstotalfields()
 
 }, [])
 
@@ -94,7 +119,113 @@ function Home() {
       },
     ],
   };
+  const pieChartData2 = {
+    labels: ['Sales Executive', 'Research Scientist', 'Laboratory Technician', 'Manufacturing Director', 'Healthcare Representative', 'Manager','Sales Representative', 'Research Director', 'Human Resources'],
+    datasets: [
+      {
+        label: 'Employees Per Department',
+        data: [`${jobtotal.setotal}`, `${jobtotal.rescireasult}`, `${jobtotal.lttotal}`, `${jobtotal.mdtotal}`, `${jobtotal.hrdeptotal}`, `${jobtotal.mantotal}`, `${jobtotal.srtotal}`, `${jobtotal.rdtotal}`, `${jobtotal.restotal}`],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+  const barChartData2 = {
+    labels: ['Male', 'Female'],
+    datasets: [
 
+      {
+        label: 'Gender',
+        data: [`${otherstotal.maletotal}`, `${otherstotal.femalereasult}`],
+
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+  const barChartData3 = {
+    labels: ['Single', 'Married', 'Divorce'],
+    datasets: [
+
+      {
+        label: 'Martial Status',
+        data: [`${otherstotal.singletotal}`, `${otherstotal.marriedtotal}`, `${otherstotal.divorcedtotal}`],
+
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+  const barChartData4 = {
+    labels: ['Above 18', 'Below 18'],
+    datasets: [
+
+      {
+        label: 'Age',
+        data: [`${otherstotal.ageatotal}`, `${otherstotal.agebtotal}`],
+
+        backgroundColor: [
+          'rgba(252, 79, 42, 0.2)',
+          'rgba(214, 185, 179, 0.2)'
+
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
   const barContainerStyle = {
     width: '100%',
     height: '60px', // Width for bar chart container
@@ -180,7 +311,7 @@ function Home() {
                     <h3>DEPARTMENTS</h3>
                     <BsFillArchiveFill className='card_icon'/>
                 </div>
-                <h1>6</h1>
+                <h1>{otherstotal.totaldep}</h1>
             </div>
             </Link>
             <Link to="/AllEmployee">
@@ -190,7 +321,7 @@ function Home() {
                     <h3>EMPLOYEES</h3>
                     <BsFillGrid3X3GapFill className='card_icon'/>
                 </div>
-                <h1>500</h1>
+                <h1>{otherstotal.totalemloyees}</h1>
             </div>
                         </Link>
 
@@ -216,6 +347,21 @@ function Home() {
         </div>
         <div style={{ ...pieContainerStyle, maxWidth: '500px' }}>
           <Pie data={pieChartData} style={chartStyle} />
+        </div>
+        <div style={{ ...pieContainerStyle, maxWidth: '500px' }}>
+          <Pie data={pieChartData2} style={chartStyle} />
+        </div>
+        <div style={{ ...barContainerStyle, maxWidth: '500px',
+         }} className='sm:mt-[80px]'>
+          <Bar data={barChartData2} style={chartStyle} />
+        </div>
+        <div style={{ ...barContainerStyle, maxWidth: '500px',
+         }} className='sm:mt-[80px]'>
+          <Bar data={barChartData3} style={chartStyle} />
+        </div>
+        <div style={{ ...barContainerStyle, maxWidth: '500px',
+         }} className='sm:mt-[80px]'>
+          <Bar data={barChartData4} style={chartStyle} />
         </div>
       </div>
     </main>
